@@ -1,0 +1,20 @@
+name: google-cloud-sdk  # the name of the snap
+version: 1  # the version of the snap
+summary: development snap of google-cloud-sdk  # 79 char long summary
+description: more info here  # a longer description for the snap
+confinement: strict  # use "strict" to enforce system access only via declared interfaces
+
+apps:
+    gcloud:
+        command: google-cloud-sdk/bin/gcloud
+        plugs:
+            - network
+            - network-bind
+
+parts:
+    google-cloud-sdk:
+        plugin: copy
+        files:
+            google-cloud-sdk: google-cloud-sdk
+        stage-packages:
+            - python
