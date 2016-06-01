@@ -1,12 +1,17 @@
-name: google-cloud-sdk  # the name of the snap
-version: 1  # the version of the snap
-summary: development snap of google-cloud-sdk  # 79 char long summary
-description: more info here  # a longer description for the snap
-confinement: strict  # use "strict" to enforce system access only via declared interfaces
+name: google-cloud-sdk
+version: 112.0.0
+summary: Google Cloud SDK
+description: Command-line interface for Google Cloud Platform products and services
+
+# Use "devmode" here to require users to install in devmode (i.e. unconfined).
+confinement: strict
 
 apps:
     gcloud:
-        command: google-cloud-sdk/bin/gcloud
+        # gcloud runs successfully using these interfaces, but will be limited
+        # (e.g. won't be able to reach the system's docker, etc.). One can get
+        # around those limitations for now by installing with --devmode.
+        command: gcloud
         plugs:
             - network
             - network-bind
@@ -14,7 +19,14 @@ apps:
 parts:
     google-cloud-sdk:
         plugin: copy
+
+        # Copying the already-created tarball. Depending on how the tarball is
+        # created it may be better to split this into separate parts and utilize
+        # the python2 plugin (see `snapcraft help python2`).
+        source: https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-112.0.0-linux-x86_64.tar.gz
         files:
-            google-cloud-sdk: google-cloud-sdk
+            '*': .
+
         stage-packages:
+            # Get python packed into the snap as well.
             - python
