@@ -19,7 +19,7 @@ Now clone this repository:
 
 And start the snap building process:
 
-    $ cd https://github.com/OddBloke/google-cloud-sdk-snap.git
+    $ cd google-cloud-sdk-snap
     $ snapcraft
 
 This will take a moment. Snapcraft will parse the `snapcraft.yaml` recipe
