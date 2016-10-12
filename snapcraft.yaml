@@ -1,32 +1,34 @@
-name: google-cloud-sdk
+name: gcloud
 version: 112.0.0
 summary: Google Cloud SDK
 description: Command-line interface for Google Cloud Platform products and services
 
-# Use "devmode" here to require users to install in devmode (i.e. unconfined).
 confinement: strict
+grade: stable
 
 apps:
     gcloud:
-        # gcloud runs successfully using these interfaces, but will be limited
-        # (e.g. won't be able to reach the system's docker, etc.). One can get
-        # around those limitations for now by installing with --devmode.
         command: gcloud
         plugs:
             - network
             - network-bind
+            - docker
 
 parts:
     google-cloud-sdk:
-        plugin: copy
-
-        # Copying the already-created tarball. Depending on how the tarball is
-        # created it may be better to split this into separate parts and utilize
-        # the python2 plugin (see `snapcraft help python2`).
+        plugin: dump
         source: https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-112.0.0-linux-x86_64.tar.gz
-        files:
-            '*': .
-
+    python:
+        plugin: nil
         stage-packages:
             # Get python packed into the snap as well.
             - python
+    docker:
+        plugin: dump
+        source: https://get.docker.com/builds/Linux/x86_64/docker-latest.tgz
+        organize:
+            # Move the docker binary to the bin/ directory in the resulting snap.
+            docker: bin/docker
+        snap:
+            # Just include the docker CLI.
+            - bin/docker

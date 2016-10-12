@@ -25,21 +25,13 @@ And start the snap building process:
 This will take a moment. Snapcraft will parse the `snapcraft.yaml` recipe
 contained within the repository, fetch the SDK, and create a snap out of it.
 Once it's completed you'll find a newly-created
-`google-cloud-sdk_112.0.0_amd64.snap`, which you can immediately install with:
+`gcloud_112.0.0_amd64.snap`, which you can immediately install with:
 
-    $ sudo snap install google-cloud-sdk_112.0.0_amd64.snap
+    $ sudo snap install --force-dangerous gcloud_112.0.0_amd64.snap
 
 gcloud can now be used like so:
 
-    $ google-cloud-sdk.gcloud init
+    $ gcloud init
 
-
-## Limitations
-
-gcloud successfully runs under strict confinement, but its capabilities will be
-limited (e.g. it won't be able to communicate with the system's docker, etc.).
-One can get around this by installing the snap in devmode (i.e. unconfined):
-
-    $ sudo snap install google-cloud-sdk_112.0.0_amd64.snap --devmode
 
 [1]: https://github.com/ubuntu-core/snapcraft
